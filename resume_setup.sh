@@ -117,6 +117,11 @@ cd "${PROJECT_PATH}"
 export COMPOSER_ALLOW_SUPERUSER=1
 composer install --no-dev --optimize-autoloader --no-interaction
 
+# Ensure APP_KEY variable exists in .env before running key:generate
+if ! grep -q "^APP_KEY=" "${PROJECT_PATH}/.env"; then
+    echo "APP_KEY=" >> "${PROJECT_PATH}/.env"
+fi
+
 # Run key generation if key is empty
 if ! grep -q "APP_KEY=base64:" "${PROJECT_PATH}/.env" || grep -q "APP_KEY=$" "${PROJECT_PATH}/.env"; then
     print_status "Generating application key..."
