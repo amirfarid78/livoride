@@ -188,6 +188,8 @@ find "${PROJECT_PATH}" -type f -exec chmod 664 {} \;
 chmod -R 775 "${PROJECT_PATH}/storage"
 chmod -R 775 "${PROJECT_PATH}/bootstrap/cache"
 chmod +x "${PROJECT_PATH}/artisan"
+# Configure git safe directory to prevent future dubious ownership warnings
+git config --global --add safe.directory "${PROJECT_PATH}"
 
 # 10. Optimized Nginx Configuration
 print_status "Creating Nginx Virtual Host configuration..."
