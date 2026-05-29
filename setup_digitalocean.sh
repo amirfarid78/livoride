@@ -162,17 +162,17 @@ sed -i "s|^DB_PASSWORD=.*|DB_PASSWORD=${DB_PASS}|" "${PROJECT_PATH}/.env"
 # Reverb host update if used
 sed -i "s|^VITE_REVERB_HOST=.*|VITE_REVERB_HOST=${APP_DOMAIN}|" "${PROJECT_PATH}/.env"
 
-# Run key generation if key is empty
-if ! grep -q "APP_KEY=base64:" "${PROJECT_PATH}/.env" || grep -q "APP_KEY=$" "${PROJECT_PATH}/.env"; then
-    print_status "Generating application key..."
-    php8.2 "${PROJECT_PATH}/artisan" key:generate --force
-fi
-
 # 8. Install Composer Dependencies
 print_status "Installing Composer dependencies (this might take a few minutes)..."
 cd "${PROJECT_PATH}"
 export COMPOSER_ALLOW_SUPERUSER=1
 composer install --no-dev --optimize-autoloader --no-interaction
+
+# Run key generation if key is empty
+if ! grep -q "APP_KEY=base64:" "${PROJECT_PATH}/.env" || grep -q "APP_KEY=$" "${PROJECT_PATH}/.env"; then
+    print_status "Generating application key..."
+    php8.2 "${PROJECT_PATH}/artisan" key:generate --force
+fi
 
 # 9. Directory Permissions Setup
 print_status "Configuring directory ownership and permissions..."
