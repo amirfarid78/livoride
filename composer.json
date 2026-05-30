@@ -85,9 +85,7 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": [
-                "phpblaze/bladelib"
-            ]
+            "dont-discover": []
         },
         "merge-plugin": {
             "include": [
